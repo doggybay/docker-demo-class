@@ -18,9 +18,9 @@ services:
       - "5432:5432"
 # environment variables to pass through
     environment:
-      POSTGRES_PASSWORD: user
-      POSTGRES_USER: pass
-      POSTGRES_DB: todos
+      
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
 # volume declaration data persist
     volumes:
       - PostgresData:/var/lib/postgresql/data
@@ -32,8 +32,8 @@ services:
     depends_on:
       - db
 # declare environment vareiables
-    environment:
-      DATABASE_URL: postgres://user:pass@postgres:5432/todos
+    # environment:
+    #   DATABASE_URL: postgres://postgres:pass@postgres:5432/todos
 # volumes to watch for changes
     volumes:
       - .:/usr/src/app
