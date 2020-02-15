@@ -18,7 +18,7 @@ docker create -v /var/lib/postgresql/data --name PostgresData alpine
 
 path that postgres needs
 
-3. docker run -p 5432:5432 --name yourContainerName -e POSTGRES_PASSWORD=yourPassword -d --volumes-from PostgresData postgres
+3. docker run -p 5432:5432 --name docker-postgres -e POSTGRES_USER=user POSTGRES_PASSWORD=pass -d POSTGRES_DB=todos --volumes-from PostgresData postgres
 
 volumes from flag points to data container
 

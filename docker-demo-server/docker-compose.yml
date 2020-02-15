@@ -1,0 +1,47 @@
+# docker-compose.yml
+version: "3"
+
+# volume definition
+volumes:
+  PostgresData:
+
+# service definition
+services:
+# service name
+  db:
+# ensure db restarts if it stops for any reason "can be omitted"
+    restart: always
+# image to use 
+    image: postgres
+# ports to expose
+    ports:
+      - "5432:5432"
+# environment variables to pass through
+    environment:
+      POSTGRES_PASSWORD: user
+      POSTGRES_USER: pass
+      POSTGRES_DB: todos
+# volume declaration data persist
+    volumes:
+      - PostgresData:/var/lib/postgresql/data
+# service definition
+  api:
+# Dockerfile location
+    build: .
+# declaring a service dependency
+    depends_on:
+      - db
+# declare environment vareiables
+    environment:
+      DATABASE_URL: postgres://user:pass@postgres:5432/todos
+# volumes to watch for changes
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+# environment file declaration 
+#    env_file: ./.env
+# ports to expose
+    ports:
+      - "8000:8000"
+# command to run
+    command: npm run dev
