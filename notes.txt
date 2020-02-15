@@ -1,0 +1,51 @@
+docker pull will allow us to pull images from docker hub
+
+docker hub is like github
+contains official and unofficial images we can upload to docker hub just like we do on github. there is a cli not looked into yet
+
+data persistence can be established using a directory on the host and pointing the container using the volumes flag
+or
+you can create a container for data persistence then use the volumes flag to point to it when starting the container
+
+1. docker run --rm   --name pg-docker -e POSTGRES_PASSWORD=docker -d -p 5432:5432 -v $HOME/docker/volumes/postgres:/var/lib/postgresql/data  postgres
+2. docker run -p 5432:5432 --name yourContainerName -e POSTGRES_PASSWORD=yourPassword -d postgres
+
+creating a container to hold our data
+special container for volumes 
+will not show running but will be listed and active
+
+docker create -v /var/lib/postgresql/data --name PostgresData alpine
+
+path that postgres needs
+
+3. docker run -p 5432:5432 --name yourContainerName -e POSTGRES_PASSWORD=yourPassword -d --volumes-from PostgresData postgres
+
+volumes from flag points to data container
+
+
+main command:
+  docker run
+
+flags:
+  -rm - will delete the container when it is stopped
+  -name - assigns a human readable name to the container
+  -e - defines environment variables
+  -d - will run the container in detached mode
+  -p - defines which ports to expose outside:inside
+  -v - defines the volumes link together outside:inside mounts
+
+image name:
+  postgres
+
+
+
+  resources used:
+  postgres:
+  https://hackernoon.com/dont-install-postgres-docker-pull-postgres-bee20e200198
+  https://elanderson.net/2018/02/setup-postgresql-on-windows-with-docker/
+  Dockerfile:
+  https://nodejs.org/de/docs/guides/nodejs-docker-webapp/
+  docker-compose:
+
+  test:
+  curl -i localhost:[outside port]
